@@ -1,6 +1,12 @@
 # Amber
 
-**The model that designs your data processing never sees your data.**
+<p align="center">
+  <img src="docs/amber-hero-labeled.png" alt="Amber: a frontier model builds a deterministic harness at build time from specification and synthetic fixtures only; the harness runs inside a trusted boundary on real regulated data, with the frontier model absent at runtime by construction." width="100%">
+</p>
+
+<p align="center">
+  <em>The model that designs the data processing never sees the data it processes.</em>
+</p>
 
 Amber is a method for putting frontier-model capability to work on regulated data
 without ever disclosing that data to the frontier model. The model works only at
