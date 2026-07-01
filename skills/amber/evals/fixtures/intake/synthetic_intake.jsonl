@@ -1,0 +1,5 @@
+{"patient_id": "P001", "dob": "1980-03-15", "height": "180cm", "weight": "80kg", "systolic": 128, "diastolic": 82, "heart_rate": 68}
+{"patient_id": "P002", "dob": "07/22/1965", "height": "5ft11", "weight": "176lb", "systolic": 150, "diastolic": 95, "heart_rate": 72}
+{"patient_id": "P003", "dob": "1992-11-02", "height": "165cm", "weight": "", "systolic": 118, "diastolic": 76, "heart_rate": 35}
+{"patient_id": "P004", "dob": "not-a-date", "height": "172cm", "weight": "68kg", "systolic": 122, "diastolic": 80, "heart_rate": 90}
+{"patient_id": "P005", "dob": "1975-06-30", "height": "158cm", "weight": "62kg", "systolic": 135, "diastolic": 88, "heart_rate": 130}

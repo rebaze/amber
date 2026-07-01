@@ -1,1 +1,4 @@
 .DS_Store
+
+# Packaged skills are build artifacts, regenerable from the skill source folder
+*.skill

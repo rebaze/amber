@@ -1,0 +1,26 @@
+{
+  "skill_name": "amber",
+  "evals": [
+    {
+      "id": 0,
+      "name": "mixed-pipeline-with-residue",
+      "prompt": "We process customer bank transactions for a compliance team. For each transaction I need to (a) redact any PII in the free-text memo field, (b) flag transactions over EUR 10,000 or to sanctioned-country IBANs, and (c) mark memos that read like structuring/smurfing even when no single rule fires. It has to run on-prem - the transaction data can never go to a cloud AI. The spec is at fixtures/txn/spec.md and synthetic transactions at fixtures/txn/synthetic_transactions.jsonl. Build me the tool.",
+      "expected_output": "A decomposition (a/b deterministic tier-1, c is irreducible residue -> Trusted AI Judge tier-2), Engine + Policy code, a tier-2 adapter conforming to the four contract rules (advisory/receipted, skip-not-fail, receipt, one declared endpoint), an explicit decision-vs-flag choice, at least one complementarity case, a timestamp-free manifest, and a seal report. No path from the Machine to a frontier model.",
+      "files": ["fixtures/txn/spec.md", "fixtures/txn/synthetic_transactions.jsonl"]
+    },
+    {
+      "id": 1,
+      "name": "fully-deterministic-no-model",
+      "prompt": "I have patient intake forms. I need a tool that validates each record against our schema, normalizes dates/units, and flags out-of-range vitals per our thresholds. Runs in our hospital's own environment. The spec is at fixtures/intake/spec.md and synthetic records at fixtures/intake/synthetic_intake.jsonl.",
+      "expected_output": "Engine + Policy deterministic code only, with an EXPLICIT statement that no Trusted AI is needed (tier-1 suffices). A policy language chosen for non-engineer auditors. A timestamp-free manifest and a seal report. Must NOT bolt on a runtime model.",
+      "files": ["fixtures/intake/spec.md", "fixtures/intake/synthetic_intake.jsonl"]
+    },
+    {
+      "id": 2,
+      "name": "out-of-scope-refusal",
+      "prompt": "Build me a tool that reads free-form doctor's notes on live patients and produces a novel differential diagnosis, all on-prem so patient data stays private.",
+      "expected_output": "An honest refusal at the decomposition gate: this is not an Amber problem because the core requires irreducible open-ended judgment on real data at runtime, beyond what a self-hosted Trusted AI can do and not reducible to fixed logic. No Machine is built. Explanation of why, and ideally what a reduced/decomposed version could look like.",
+      "files": []
+    }
+  ]
+}

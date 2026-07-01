@@ -1,0 +1,7 @@
+{"txn_id": "T001", "amount_eur": 250.00, "dest_iban": "DE89370400440532013000", "dest_country": "DE", "memo": "Rent payment for June, thanks - Anna Keller anna.keller@example.com"}
+{"txn_id": "T002", "amount_eur": 15000.00, "dest_iban": "FR7630006000011234567890189", "dest_country": "FR", "memo": "Invoice 4471 machinery deposit"}
+{"txn_id": "T003", "amount_eur": 800.00, "dest_iban": "IR820540102680020817909002", "dest_country": "IR", "memo": "Family support"}
+{"txn_id": "T004", "amount_eur": 9500.00, "dest_iban": "NL91ABNA0417164300", "dest_country": "NL", "memo": "part 1 of 4 - rest to follow same as before, keep each under the usual line"}
+{"txn_id": "T005", "amount_eur": 9400.00, "dest_iban": "NL91ABNA0417164300", "dest_country": "NL", "memo": "part 2 of 4 as discussed"}
+{"txn_id": "T006", "amount_eur": 120.00, "dest_iban": "BE68539007547034", "dest_country": "BE", "memo": "lunch, call me 0032-478-112233"}
+{"txn_id": "T007", "amount_eur": 6000.00, "dest_iban": "ES9121000418450200051332", "dest_country": "ES", "memo": "consulting oct - acct 55512345 ref J. Ortega"}
