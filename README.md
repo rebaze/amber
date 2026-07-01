@@ -208,6 +208,59 @@ manifest is what turns Frozen and Transparent from claims into things an auditor
 checks with `diff`: same hashes, same machine; a changed policy shows up as a
 changed hash and nothing else moves.
 
+## Using the skill
+
+This repository ships the method as an installable **skill** under `skills/amber/` —
+a `SKILL.md` build procedure plus the glossary and the tier-2 contract it loads on
+demand. Installed into an agent, the skill fires when you ask that agent to build a
+Machine and walks it through the gates: decomposition, deterministic-first
+construction, the Trusted AI contract where a residue needs it, the manifest, and
+the seal report.
+
+The skill exists in two forms. The **source folder** `skills/amber/` is the thing
+you edit and version. The **packaged bundle** `amber.skill` is that folder zipped
+into a single file for agents that install from an archive; it is a build artifact
+(git-ignored), rebuilt from the folder whenever you need it:
+
+```sh
+# from the repo root, rebuild the bundle
+cd skills && zip -r amber.skill amber -x 'amber/evals/*'
+```
+
+### Install
+
+Place the skill wherever your agent discovers skills.
+
+- **Claude Code** — copy the folder into a skills directory it scans:
+  `~/.claude/skills/amber/` to have it everywhere, or `<repo>/.claude/skills/amber/`
+  for a single project. Open a new session and ask it to build a Machine; it
+  triggers on its own.
+
+  ```sh
+  cp -R skills/amber ~/.claude/skills/amber
+  ```
+
+- **Agents that install from a bundle** (Claude.ai, the Agent SDK, plugin
+  installers) — hand them `amber.skill`, the zipped bundle above, through whatever
+  "add a skill" path they expose.
+
+### Update
+
+A skill is just files read fresh each session, so updating is overwriting.
+
+- **Folder install** — replace the installed copy, then start a new session:
+
+  ```sh
+  git pull && cp -R skills/amber ~/.claude/skills/amber
+  ```
+
+- **Bundle install** — rebuild `amber.skill` and re-add it, replacing the old
+  version.
+
+Nothing caches between sessions; the next one reads whatever is on disk. To confirm
+an update took, open a fresh session and ask the agent to build a Machine — it
+should follow the current gates.
+
 ## What it changes
 
 Amber separates the two things the usual arrangement conflates: the capability that
