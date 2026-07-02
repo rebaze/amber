@@ -1,0 +1,20 @@
+{
+  "name": "amber",
+  "version": "1.0.0",
+  "description": "The Amber method as a build skill: drives a frontier model, in the Forge, through constructing a deterministic, auditable, sealed data-processing Machine from a spec and synthetic fixtures — with the model absent at runtime by construction.",
+  "author": {
+    "name": "rebaze",
+    "url": "https://github.com/rebaze/amber"
+  },
+  "keywords": [
+    "amber",
+    "regulated-data",
+    "privacy",
+    "gdpr",
+    "hipaa",
+    "deterministic",
+    "auditable",
+    "on-prem",
+    "sealed"
+  ]
+}

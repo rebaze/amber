@@ -1,0 +1,17 @@
+{
+  "name": "amber",
+  "version": "1.0.0",
+  "description": "The Amber method, packaged as an installable Claude skill.",
+  "owner": {
+    "name": "rebaze",
+    "url": "https://github.com/rebaze"
+  },
+  "plugins": [
+    {
+      "name": "amber",
+      "source": "./",
+      "description": "Build an Amber Machine in the Forge: deterministic-first, auditable, sealed data processing designed by a frontier model that never sees your data.",
+      "version": "1.0.0"
+    }
+  ]
+}
