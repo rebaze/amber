@@ -8,22 +8,32 @@
   <em><strong>Amber lets a powerful AI design your data-processing tool without ever seeing your data — you ship the tool, not the AI.</strong></em>
 </p>
 
-Using a frontier model to write code is not new. What Amber adds is a **precise
-language** for the separation — one that names what AI is allowed to do in *both*
-places it appears, not just where it writes the code:
+Amber is, first of all, a set of words. Teams already build apps with AI. What
+they lack is a precise way to say *where* the AI was allowed to act — and where it
+must never be. Amber names four things, and once you have the names the rest of the
+method is almost obvious.
 
-- **The Forge** — the untrusted build environment. The frontier model works here,
-  from your spec and synthetic data. It never sees real data, and it is gone before
-  runtime.
-- **The Machine** — the finished, deterministic tool built in the Forge. Plain,
-  readable, frozen code. This is what you ship — not the AI.
-- **The Enclave** — your trusted runtime. The Machine runs here on real data, with
-  no frontier model present and no assumption of internet access.
-- **Trusted AI** — an optional model *you* host inside the Enclave, in a defined,
-  bounded role (Judge or Capability). The only AI allowed near real data, and only
-  on your terms.
+- **The Machine** — the finished program. It's an ordinary app, built the way
+  people build apps now: you describe what you want to a state-of-the-art model —
+  Claude Opus, GPT‑5.6 — and it writes the code. The twist is what happens next.
+  The Machine is plain, frozen code that you ship and run yourself. The model that
+  wrote it is not part of it.
+- **The Forge** — where the Machine is built. An open, AI-powered development
+  environment — think Codex or Claude Code — with a frontier model doing the work.
+  The Forge is *untrusted*: it never sees your real data, only your spec and
+  synthetic stand-in data. Once the Machine is built, the Forge is out of the
+  picture.
+- **The Enclave** — where the Machine runs. Your trusted environment, on your real
+  data, with no connection to any third-party cloud model. What happens in the
+  Enclave stays inside your boundary.
+- **Enclave AI** — the one exception. Sometimes the Machine needs to call a model
+  while it runs. When it does, it calls a model *you* host inside the Enclave, on a
+  trusted endpoint you control — never a third-party cloud. This is the only AI
+  allowed near your real data, and only on your terms.
 
-Full definitions in the [glossary](docs/glossary.md).
+That is the whole vocabulary: a **Machine**, built in the **Forge**, that runs in
+the **Enclave**, sometimes calling **Enclave AI**. Full definitions in the
+[glossary](docs/glossary.md).
 
 ---
 
@@ -87,8 +97,8 @@ runtime to drift, no silent version bump from a vendor, no behavior that changes
 underneath you. What you tested is what runs. What you audited stays audited.
 
 Determinism is a spectrum, and the method is honest about it. Deterministic code
-is fully reproducible; a trusted model is not — a model swap or a quantization
-change can move its verdict. So the load-bearing rule: **a trusted-model verdict
+is fully reproducible; Enclave AI is not — a model swap or a quantization
+change can move its verdict. So the load-bearing rule: **an Enclave AI verdict
 can never silently change a deterministic outcome.** If no model is reachable the
 judgment skips cleanly rather than fails, and verdicts are advisory and receipted
 (see Transparent), never silent gates.
@@ -106,7 +116,7 @@ machine Amber leaves behind.
 
 Transparency only gets teeth when you say *who audits what, how often.* Engineers
 audit the engine once; a domain expert re-reads the small policy every cycle. And
-where the machine uses a trusted model, transparency is a **runtime output
+where the machine uses Enclave AI, transparency is a **runtime output
 obligation**: each call emits a receipt — verdict, one-line reason, model and
 version — as durable output an auditor can read after the fact. Readable code
 around a model is still a black box unless the model explains itself in what it
@@ -141,8 +151,8 @@ architecture gives it none.
 Most of what the machine does is fixable logic — rules, transforms, decisions that
 can be written down once and frozen — and runs as plain deterministic code. Where a
 task genuinely needs judgment that cannot be reduced to fixed logic, the machine
-calls a **self-hosted trusted model, inside the Enclave**, on data that never
-leaves. The execution ladder is: deterministic code first; a trusted model only
+calls **Enclave AI** — a self-hosted model, inside the Enclave — on data that never
+leaves. The execution ladder is: deterministic code first; Enclave AI only
 where it is needed; the frontier model never. Each rung keeps Sealed true.
 
 This is the one place a model runs at runtime, and it is where the real engineering
@@ -175,21 +185,21 @@ data at runtime. Amber does not pretend otherwise. That is the line.
 **The texture.** In practice the line cuts through the middle of most real
 pipelines, not around them. A pipeline is rarely one monolithic act of judgment;
 it is mostly fixable logic with a few genuinely hard spots. Amber freezes
-everything it can into deterministic code and lets a trusted model cover the
+everything it can into deterministic code and lets Enclave AI cover the
 residue. The residue shrinks; it does not always vanish.
 
-**The fork.** When a trusted model covers the residue, you must decide *what its
+**The fork.** When Enclave AI covers the residue, you must decide *what its
 verdict is allowed to do*: act autonomously, or produce only a receipted flag a
 human adjudicates. This is an explicit design choice — and for an audit posture the
 flag-for-a-human option is usually right, keeping every consequential decision with
 an accountable person while still capturing the model's reasoning.
 
 **The move.** So part of the method is decomposition — designing the problem so
-that the frozen machine plus a trusted model covers it, isolating the parts that
+that the frozen machine plus Enclave AI covers it, isolating the parts that
 truly need judgment from the parts that only looked like they did. A problem that
 cannot be decomposed this way is not an Amber problem, and you will know early.
 
-The two tiers must be genuinely complementary, or the trusted model is decoration.
+The two tiers must be genuinely complementary, or Enclave AI is decoration.
 If everything it catches a deterministic rule could also catch, you do not need it.
 So validating a machine includes a required step: show at least one case that
 passes every deterministic check and is resolved only by the model's judgment. If
@@ -215,7 +225,7 @@ straight from its GitHub URL. The skill itself lives at `skills/amber/` — a
 `SKILL.md` build procedure plus the glossary and the tier-2 contract it loads on
 demand. However you install it, the skill fires when you ask the agent to build a
 Machine and walks it through the gates: decomposition, deterministic-first
-construction, the Trusted AI contract where a residue needs it, the manifest, and
+construction, the Enclave AI contract where a residue needs it, the manifest, and
 the seal report.
 
 ### Install

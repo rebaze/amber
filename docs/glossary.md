@@ -5,9 +5,9 @@ has to be reconstructed each time, the method reads as vaguer than it is. This i
 the canonical reference. The [README](../README.md) uses these terms as defined
 here.
 
-> Naming still settling: **the Forge** / **the Enclave** (the two environments)
-> and **Trusted AI** (formerly "local model") are working labels — swap them
-> freely, the definitions are what matter.
+> The terms are named for *place*: **the Forge** and **the Enclave** are the two
+> environments, and **Enclave AI** is the model that may run inside the Enclave.
+> (Earlier drafts called the runtime model "the local model," then "Trusted AI.")
 
 ---
 
@@ -25,20 +25,20 @@ but it is a foreign cloud model that must never see real data. It works only at
 build time and is **absent at runtime by construction** — the Machine is never
 given an address to call it.
 
-### Trusted AI
+### Enclave AI
 An **open-weights model, self-hosted inside [the Enclave](#the-enclave-runtime-environment)**,
 that may run *at runtime*, under the operator's control, on real data that never
 leaves. It is the only model present when real data is being processed. Where the
-frontier model is strong-but-untrusted, the Trusted AI is the inverse:
+frontier model is strong-but-untrusted, the Enclave AI is the inverse:
 weaker, but trusted because you host it. It has two possible roles — **Judge** and
 **Capability** — and both are **optional and off by default.** A Machine with no
-Trusted AI at all is the normal case, not a degraded one.
+Enclave AI at all is the normal case, not a degraded one.
 
-> *Formerly "the local model." "Trusted" names the property that matters
-> (you host it, inside the boundary); "local" only named where it sits.*
+> *Named for where it lives: inside the Enclave, the one place a model may touch
+> real data. Earlier drafts called it "the local model," then "Trusted AI."*
 
-#### Judge *(optional role of the Trusted AI)*
-A Trusted AI that, at runtime, sees **both the Machine's deterministic output and
+#### Judge *(optional role of the Enclave AI)*
+An Enclave AI that, at runtime, sees **both the Machine's deterministic output and
 the real data**, and issues an **advisory, [receipted](#receipt) verdict** on a
 case the deterministic rules cannot settle. A Judge never silently overrides a
 deterministic outcome; its verdict is advice with a paper trail, not a gate.
@@ -49,13 +49,13 @@ one is explicitly specified.* A Judge is worth adding only when it earns its pla
 — it must resolve at least one case that passes every deterministic check (see the
 complementarity requirement in the README).
 
-#### Capability *(optional role of the Trusted AI)*
+#### Capability *(optional role of the Enclave AI)*
 An inference call the frontier model **designs into the Machine** to provide a
 *safe capability that is genuinely hard to express as deterministic code* (fuzzy
 matching, free-text classification, and the like). Unlike the Judge — which sits
 outside and comments — a Capability is wired into the Machine's own logic. For it
 to work, the **Machine must expose a pluggable model endpoint**: at runtime it
-connects to a Trusted AI inference endpoint reachable inside the Enclave. Also
+connects to an Enclave AI inference endpoint reachable inside the Enclave. Also
 optional; a Machine uses one only where the frontier model determined deterministic
 code could not do the job.
 
@@ -75,7 +75,7 @@ Outside the [trust boundary](#trust-boundary).
 ### The Enclave *(runtime environment)*
 Where the **Machine runs, on real data.** A *constrained, trusted* environment:
 **no frontier model is available**, and even **internet access cannot be assumed.**
-The Machine must run within these limits. Any Trusted AI runs here too, self-hosted.
+The Machine must run within these limits. Any Enclave AI runs here too, self-hosted.
 Inside the [trust boundary](#trust-boundary).
 
 ---
@@ -130,7 +130,7 @@ constructs the Machine); runtime happens in the Enclave (the Machine processes r
 data). They never overlap.
 
 ### The ladder
-The execution order inside the Machine: **deterministic code first; a Trusted AI
+The execution order inside the Machine: **deterministic code first; an Enclave AI
 only where genuinely needed; the frontier model never.** Each rung keeps
 [Sealed](#sealed) true.
 
@@ -150,7 +150,7 @@ deliberately no timestamp so two builds of the same inputs are byte-identical. I
 turns "Frozen" from a claim into something an auditor checks with `diff`.
 
 ### Receipt
-The **durable runtime output of a Trusted AI call**: the verdict, a one-line
-reason, and which model and version decided it. Transparency for the Trusted AI is
+The **durable runtime output of an Enclave AI call**: the verdict, a one-line
+reason, and which model and version decided it. Transparency for the Enclave AI is
 a runtime output obligation — without a receipt, an embedded model is a black box
 inside otherwise-readable code.

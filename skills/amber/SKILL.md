@@ -1,7 +1,7 @@
 ---
 name: amber
 description: >-
-  Use this skill whenever you are asked to build, design, or generate a data-processing tool (classifier, extractor, redactor, scorer, validator) that must run on regulated, sensitive, or private data WITHOUT that data ever reaching a frontier/cloud model — banking records, patient files, PII, claims, legal docs, anything under GDPR/HIPAA/NIS2. Trigger it EVEN for a direct "build me the tool" imperative you could code yourself: consult it first, because a naive build silently omits the seal it exists to provide — the deterministic tier-1/tier-2 split, the timestamp-free manifest, and the no-frontier-model-at-runtime guarantee. Also trigger for framings like "the AI designs the tool but never sees the data," "no model at runtime," "air-gapped / on-prem / inside our boundary," "auditable / deterministic," the Amber method by name (Forge, Enclave, Machine, Trusted AI, sealed, frozen, manifest), or a spec plus synthetic fixtures to build from. This IS the Forge procedure for constructing an Amber Machine.
+  Use this skill whenever you are asked to build, design, or generate a data-processing tool (classifier, extractor, redactor, scorer, validator) that must run on regulated, sensitive, or private data WITHOUT that data ever reaching a frontier/cloud model — banking records, patient files, PII, claims, legal docs, anything under GDPR/HIPAA/NIS2. Trigger it EVEN for a direct "build me the tool" imperative you could code yourself: consult it first, because a naive build silently omits the seal it exists to provide — the deterministic tier-1/tier-2 split, the timestamp-free manifest, and the no-frontier-model-at-runtime guarantee. Also trigger for framings like "the AI designs the tool but never sees the data," "no model at runtime," "air-gapped / on-prem / inside our boundary," "auditable / deterministic," the Amber method by name (Forge, Enclave, Machine, Enclave AI, sealed, frozen, manifest), or a spec plus synthetic fixtures to build from. This IS the Forge procedure for constructing an Amber Machine.
 ---
 
 # Amber — building a Machine in the Forge
@@ -22,7 +22,7 @@ That freedom is also the risk — two builds that drift apart quietly break the
 guarantee below. The gates in this skill exist to hold the method steady across
 builds.
 
-The vocabulary (Forge, Enclave, Machine, Engine, Policy, Trusted AI, Judge,
+The vocabulary (Forge, Enclave, Machine, Engine, Policy, Enclave AI, Judge,
 Capability, spec, synthetic fixtures, manifest, receipt) is defined precisely in
 [references/glossary.md](references/glossary.md). Read it if any term feels
 underspecified — the method reads as vaguer than it is when the terms are guessed
@@ -56,10 +56,10 @@ Inside the Machine, work is resolved in this order, and never out of it:
 1. **Deterministic code first.** Most of any real pipeline is fixable logic —
    rules, transforms, decisions you can write down once and freeze. This is the
    elegant half. Push everything you can down to this rung.
-2. **A Trusted AI only where genuinely needed.** Where a task needs judgment that
+2. **An Enclave AI only where genuinely needed.** Where a task needs judgment that
    truly cannot be reduced to fixed logic, the Machine may call a self-hosted,
-   open-weights **Trusted AI** inside the Enclave, on data that never leaves. This
-   is **optional and off by default** — a Machine with no Trusted AI is the normal
+   open-weights **Enclave AI** inside the Enclave, on data that never leaves. This
+   is **optional and off by default** — a Machine with no Enclave AI is the normal
    case, not a degraded one.
 3. **The frontier model never.** You are not given an address to call at runtime.
    The Machine cannot reach you. This is what makes Sealed structural.
@@ -80,9 +80,9 @@ anything, decompose the spec: separate the parts that are fixable logic from the
 residue that genuinely needs judgment on live data.
 
 - If the whole problem reduces to deterministic logic (plus, at most, a bounded
-  Trusted AI for the residue) — it is an Amber problem. Proceed.
+  Enclave AI for the residue) — it is an Amber problem. Proceed.
 - If the core of the problem requires open-ended frontier reasoning on the real
-  data at runtime — reasoning beyond what a self-hosted Trusted AI can do and
+  data at runtime — reasoning beyond what a self-hosted Enclave AI can do and
   irreducible to fixed logic — **it is not an Amber problem.** There is no trick
   that gives frontier reasoning on real data at runtime without disclosing real
   data at runtime. Say this plainly and stop. Do not pretend otherwise; the honest
@@ -92,7 +92,7 @@ The line usually cuts *through the middle* of a pipeline, not around it. A
 pipeline is rarely one monolithic act of judgment — it is mostly fixable logic
 with a few hard spots. Your job is decomposition: freeze everything you can into
 deterministic code, isolate the genuine residue, and cover only that with a
-Trusted AI. State the decomposition explicitly as the first output — what goes to
+Enclave AI. State the decomposition explicitly as the first output — what goes to
 tier 1, what (if anything) goes to tier 2, and why the tier-2 parts cannot be
 frozen.
 
@@ -152,10 +152,10 @@ ambient nondeterminism. Frozen depends on this.
 Keep the two parts genuinely separate. If domain logic leaks into the Engine, the
 "audit the Policy every cycle, the Engine once" promise stops being true.
 
-### Gate 5 — Wire a Trusted AI only if the spec calls for it, under contract
+### Gate 5 — Wire an Enclave AI only if the spec calls for it, under contract
 
 Only if Gate 1 identified a genuine residue does the Machine talk to a model at
-runtime — a **Trusted AI**, self-hosted in the Enclave. This is the one tier that
+runtime — a **Enclave AI**, self-hosted in the Enclave. This is the one tier that
 can break the method's guarantees if left informal, so it is the one tier with a
 contract. **Before wiring anything, read
 [references/tier-2-contract.md](references/tier-2-contract.md) in full** and make
@@ -182,10 +182,10 @@ consequential decision with an accountable person. Whichever you pick, state it.
 **Complementarity check (required if tier 2 exists).** Tier 2 earns its place only
 if it catches something tier 1 cannot. Construct and include at least one concrete
 case that passes *every* deterministic check yet is resolved only by the model's
-judgment. If you cannot construct that case, the Trusted AI is decoration — remove
+judgment. If you cannot construct that case, the Enclave AI is decoration — remove
 it and resolve the problem in tier 1.
 
-The two roles of a Trusted AI (**Judge** — sits outside the logic and comments;
+The two roles of an Enclave AI (**Judge** — sits outside the logic and comments;
 **Capability** — wired into the Machine's own logic) are defined in the glossary.
 Both are optional. Use the one the spec's residue actually calls for.
 
@@ -199,7 +199,7 @@ into things an auditor checks with `diff`. Emit it with exactly these contents:
 - `policy_hash` — content hash of the Policy source.
 - `spec_hash` — content hash of the originating spec.
 - `dependencies` — every dependency pinned to an exact version.
-- `tier2` — present only if a Trusted AI is wired: the declared endpoint contract
+- `tier2` — present only if an Enclave AI is wired: the declared endpoint contract
   and the model/version it expects. Absent otherwise.
 
 **Deliberately no timestamp, no build host, no random seed, nothing ambient.** Two
@@ -231,7 +231,7 @@ A complete Machine the customer can drop into their Enclave:
 1. **The decomposition** — tier-1 vs tier-2 split, with the reasoning (from Gate 1).
 2. **The Engine** — stable machinery, readable, auditable.
 3. **The Policy** — in the language chosen at Gate 3, readable by its auditors.
-4. **The Trusted AI adapter** — only if the spec called for one, conforming to the
+4. **The Enclave AI adapter** — only if the spec called for one, conforming to the
    contract, with the complementarity case (Gate 5).
 5. **The manifest** — timestamp-free, per Gate 6.
 6. **A seal report** — the Gate 7 checks, each shown rather than claimed.
@@ -245,11 +245,11 @@ Amber is not a universal solvent. Do not stretch it to fit a problem it doesn't.
 - **Irreducible live judgment.** If the problem needs frontier-level reasoning on
   real data at runtime, it is out of scope. Say so at Gate 1 and stop.
 - **Undecomposable problems.** If the problem cannot be split into a frozen machine
-  plus a bounded Trusted AI, it is not an Amber problem. You will usually know
+  plus a bounded Enclave AI, it is not an Amber problem. You will usually know
   early.
 - **Suspected real data in the Forge.** Stop and ask for synthetic fixtures (Gate
   2).
-- **A Trusted AI that earns nothing.** If you cannot build the complementarity
+- **An Enclave AI that earns nothing.** If you cannot build the complementarity
   case, remove the tier (Gate 5).
 
 The honest line is part of the method. A clear "this isn't an Amber problem, and

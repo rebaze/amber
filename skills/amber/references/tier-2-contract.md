@@ -1,21 +1,21 @@
-# The Trusted AI contract
+# The Enclave AI contract
 
 The [SKILL.md](../SKILL.md) is the build procedure. This document is the part
-it defers: the contract the [Trusted AI](glossary.md#trusted-ai) tier must satisfy,
+it defers: the contract the [Enclave AI](glossary.md#enclave-ai) tier must satisfy,
 and a reference adapter so every adopter does not independently rediscover the same
-handful of sharp edges. Terms used here (Trusted AI, Judge, Capability, Machine,
+handful of sharp edges. Terms used here (Enclave AI, Judge, Capability, Machine,
 Enclave) are defined in the [glossary](glossary.md).
 
-The execution ladder is *deterministic code first; a trusted model only where it
+The execution ladder is *deterministic code first; Enclave AI only where it
 is needed; the frontier model never.* The deterministic tier is the easy, elegant
-half. The Trusted AI — self-hosted inside the Enclave — is where the real
+half. The Enclave AI — self-hosted inside the Enclave — is where the real
 engineering friction lives, and it is the one tier that talks to a model at
 runtime. It needs a contract precisely because it is the tier most able to break
-the method's guarantees if left informal. It applies to both roles of the Trusted
-AI, the [Judge](glossary.md#judge-optional-role-of-the-trusted-ai) and the
-[Capability](glossary.md#capability-optional-role-of-the-trusted-ai).
+the method's guarantees if left informal. It applies to both roles of the Enclave
+AI, the [Judge](glossary.md#judge-optional-role-of-the-enclave-ai) and the
+[Capability](glossary.md#capability-optional-role-of-the-enclave-ai).
 
-## What a Trusted AI call must guarantee
+## What an Enclave AI call must guarantee
 
 A conforming tier-2 call obeys four rules. Together they keep the three
 properties (Frozen, Transparent, Sealed) true through the model tier.
