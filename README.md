@@ -8,9 +8,10 @@
   <em><strong>Amber lets a powerful AI design your data-processing tool without ever seeing your data — you ship the tool, not the AI.</strong></em>
 </p>
 
-Amber is, first of all, a set of words. Teams already build apps with AI. What
-they lack is a precise way to say *where* the AI was allowed to act — and where it
-must never be. Amber names four things, and once you have the names the rest of the
+Before Amber is a method, it is a **language for where AI is allowed**. Teams
+already build apps with AI. What they lack is a precise way to say where it acted
+on their data — and where it must never. Amber supplies the words, and the words
+draw the line. It names four things, and once you have the names the rest of the
 method is almost obvious.
 
 - **The Machine** — the finished program. It's an ordinary app, built the way
@@ -26,10 +27,12 @@ method is almost obvious.
 - **The Enclave** — where the Machine runs. Your trusted environment, on your real
   data, with no connection to any third-party cloud model. What happens in the
   Enclave stays inside your boundary.
-- **Enclave AI** — the one exception. Sometimes the Machine needs to call a model
-  while it runs. When it does, it calls a model *you* host inside the Enclave, on a
-  trusted endpoint you control — never a third-party cloud. This is the only AI
-  allowed near your real data, and only on your terms.
+- **Enclave AI** — what makes the Machine more than an ordinary program. A plain
+  program can only do what its rules spell out; where a task needs real judgment,
+  the Machine calls a model *you* host inside the Enclave, on a trusted endpoint you
+  control — never a third-party cloud. Secure because you run it, capable because it
+  is still AI. This is the only model allowed near your real data, and only on your
+  terms.
 
 That is the whole vocabulary: a **Machine**, built in the **Forge**, that runs in
 the **Enclave**, sometimes calling **Enclave AI**. Full definitions in the
@@ -150,9 +153,10 @@ architecture gives it none.
 
 Most of what the machine does is fixable logic — rules, transforms, decisions that
 can be written down once and frozen — and runs as plain deterministic code. Where a
-task genuinely needs judgment that cannot be reduced to fixed logic, the machine
+task genuinely needs judgment that no fixed rule can capture, the machine
 calls **Enclave AI** — a self-hosted model, inside the Enclave — on data that never
-leaves. The execution ladder is: deterministic code first; Enclave AI only
+leaves. This is what carries the machine past where ordinary code stops, sealed the
+whole way. The execution ladder is: deterministic code first; Enclave AI only
 where it is needed; the frontier model never. Each rung keeps Sealed true.
 
 This is the one place a model runs at runtime, and it is where the real engineering
