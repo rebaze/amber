@@ -8,11 +8,13 @@
   <em><strong>Amber lets a powerful AI design your data-processing tool without ever seeing your data — you ship the tool, not the AI.</strong></em>
 </p>
 
-Before Amber is a method, it is a **language for where AI is allowed**. Teams
-already build apps with AI. What they lack is a precise way to say where it acted
-on their data — and where it must never. Amber supplies the words, and the words
-draw the line. It names four things, and once you have the names the rest of the
-method is almost obvious.
+Amber is a **language for making state-of-the-art AI and trusted open-weight AI work
+as one system** — safely, on data you are not allowed to expose. One kind designs
+your tool; the other runs inside it — held together so that the strong model never
+touches real data and the trusted one never leaves your walls. Teams already build apps with AI; what they lack is a way to combine the
+powerful-but-untrusted model with the weaker one they can trust, without giving up
+either. Amber supplies the words, and the words draw the line. It names four things,
+and once you have the names the rest of the method is almost obvious.
 
 - **The Machine** — the finished program. It's an ordinary app, built the way
   people build apps now: you describe what you want to a state-of-the-art model —
